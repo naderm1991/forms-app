@@ -5,7 +5,6 @@ $user=DB_USERNAME;
 $password=DB_PASSWORD;
 global $conn;
 $options=array(PDO::MYSQL_ATTR_INIT_COMMAND=>'SET NAMES utf8');
-
 try
 {
     $conn=new PDO($dsn,$user,$password,$options);

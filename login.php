@@ -25,6 +25,8 @@ if (isset($_SESSION['user']['id'])) {
                 <button>Login</button>
                 <hr>
                 <a href="signup.php">Sign Up</a>
+                <br><br>
+                <a href="forget_password.php">Reset Password</a>
             </form>
         </div>
     </body>

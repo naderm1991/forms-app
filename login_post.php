@@ -80,7 +80,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         }
     }
 
-
     if ($try_later){
         echo "try again after 30 sec. ";
         $failed_login=0;
