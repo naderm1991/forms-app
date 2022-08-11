@@ -109,7 +109,6 @@ if (isset($_SESSION['username']) && $_SESSION['Group_Name'] == 'admin')
                 <title>Update</title>
                 <style>
                     body {
-                        background: url('http://i.imgur.com/Eor57Ae.jpg') no-repeat fixed center center;
                         background-size: cover;
                         font-family: Montserrat;
                     }
@@ -163,21 +162,18 @@ if (isset($_SESSION['username']) && $_SESSION['Group_Name'] == 'admin')
                     }
 
                     .Registration-block input#username {
-                        background: #fff url('http://i.imgur.com/u0XmBmv.png') 20px top no-repeat;
+                        background: #fff url('https://i.imgur.com/u0XmBmv.png') 20px top no-repeat;
                         background-size: 16px 80px;
                     }
 
                     .Registration-blockk input#username:focus {
-                        background: #fff url('http://i.imgur.com/u0XmBmv.png') 20px bottom no-repeat;
+                        background: #fff url('https://i.imgur.com/u0XmBmv.png') 20px bottom no-repeat;
                         background-size: 16px 80px;
                     }
 
                     .Registration-block input#password {
-
-                        /*//http://i.imgur.com/Qf83FTt.png*/
-
-                            background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px top no-repeat;
-                            background-size: 16px 80px;
+                        background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px top no-repeat;
+                        background-size: 16px 80px;
                     }
 
                     .Registration-block input#password:focus {

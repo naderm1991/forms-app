@@ -2,40 +2,8 @@
 include 'db_connection.php';
 session_start();
 
-if (isset($_SESSION['username'])) {
-    header('location:Home.php');
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST")
-{
-    // collect value of input field
-    $username = $_POST['email'];
-    $password = $_POST['password'];
-    $time = date("H:i:s");
-    $date = date("Y/m/d");
-    $hashed_pass = sha1($password);
-    $count=0;
-    $row=null;
-
-    if (empty($username) || empty($password)) {
-        echo "Failed Login.";
-    }
-    if (isset($username) && isset($password)) {
-        /** @var TYPE_NAME $conn */
-        $stmt = $conn->prepare("SELECT id FROM users WHERE email=? AND password =?");
-        $stmt->execute(array($username, $hashed_pass));
-        $row = $stmt->fetch();
-        $count = $stmt->rowCount();
-    }
-
-    if ($count > 0)
-    {
-        $_SESSION['user_id'] = $row['id'];
-        header('location:index.php');
-    }
-    else {
-        echo "Login Invalid , Please Login again";
-    }
+if (isset($_SESSION['user']['id'])) {
+    header('location:index.php');
 }
 ?>
 <!DOCTYPE html>
@@ -49,15 +17,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     <body >
         <div class="logo"></div>
         <div class="login-block">
-            <form id='Login' action="<?php echo $_SERVER['PHP_SELF']; ?>" method='post'
+            <form id='Login' action="login_post.php" method='post'
                   accept-charset='UTF-8'>
                 <h1>Login</h1>
                 <input type="text" value="" name='email' placeholder="Email" id="email" required="required"/>
                 <input type="password" value=""  name='password' placeholder="Password" id="password" required="required" />
-                <button name="submit">Login</button>
+                <button>Login</button>
                 <hr>
                 <a href="signup.php">Sign Up</a>
             </form>
         </div>
     </body>
 </html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    // this is the id of the form
+    $("#Login").submit(function(e) {
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+        let form = $(this);
+        let actionUrl = form.attr('action');
+        $.ajax({
+            type: "POST",
+            url: actionUrl,
+            data: form.serialize(), // serializes the form's elements.
+            success: function(data)
+            {
+                if (data=="1"){
+                    window.location="index.php";
+                }else {
+                    alert(data); // show response from the php script.
+                }
+
+            }
+        });
+    });
+</script>
