@@ -1,15 +1,14 @@
 <?php
 ini_set( 'display_errors', 1 );
 error_reporting( E_ALL );
-include 'db_connection.php';
+require 'db_connection.php';
+require 'src/functions.php';
 
 if(isset($_POST['submit_email']) && $_POST['email'])
 {
     $email = $_POST['email'];
-    $sql = "select email,password from users where email='$email'";
     /** @var TYPE_NAME $conn */
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
+    $stmt = select_query($conn,$_POST,'users');
     if($stmt->rowCount()==1)
     {
         $row = $stmt->fetch();
@@ -25,6 +24,9 @@ if(isset($_POST['submit_email']) && $_POST['email'])
         $time = time();
         if(mail($to,$subject,$message,$header))
         {
+            $array['password'] = $pass;
+            $array['email'] = $row['email'];
+            insert_query($conn,$array);
             echo "Check Your Email and Click on the link sent to your email";
         }
         else
