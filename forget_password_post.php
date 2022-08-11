@@ -26,10 +26,12 @@ if(isset($_POST['submit_email']) && $_POST['email'])
         if(mail($to,$subject,$message,$header))
         {
             echo "Check Your Email and Click on the link sent to your email";
+            header("refresh:1;url=login.php");
         }
         else
         {
             echo "Mail Error";
+            header("refresh:1;url=login.php");
         }
     }
 }

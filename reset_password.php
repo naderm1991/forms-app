@@ -7,7 +7,6 @@ if(isset($_POST['submit_password']) && $_POST['password']){
     $stmt->execute(array(sha1($_POST['password']),$_POST['email']));
     echo "Success.";
     header("Location: login.php");
-
 }
 else if($_GET['key'] && $_GET['reset'])
 {
