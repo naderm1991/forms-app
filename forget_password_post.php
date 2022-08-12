@@ -11,8 +11,13 @@ if(isset($_POST['submit_email']) && $_POST['email'])
     $stmt = select_query($conn,$_POST,'users');
     if($stmt->rowCount()==1)
     {
-        ini_set("SMTP", "smtp.mailtrap.io");
-        ini_set("sendmail_from", "18a7532817-53c10a@inbox.mailtrap.io");
+        ini_set("MAIL_DRIVER", "smtp");
+        ini_set("MAIL_ENCRYPTION", "tls");
+        ini_set("MAIL_FROM_ADDRESS", "support@cfaffiliate360.com");
+        ini_set("MAIL_HOST", "smtp.mailtrap.io");
+        ini_set("MAIL_PASSWORD", "5789374bb1e258");
+        ini_set("MAIL_PORT", "2525");
+        ini_set("MAIL_USERNAME", "d4aba6e00b3c5b");
 
         $row = $stmt->fetch();
         $email=md5($row['email']);
@@ -21,7 +26,7 @@ if(isset($_POST['submit_email']) && $_POST['email'])
         $link="<a href='$url/reset_password.php?key=".$email."&reset=".$pass.">Click To Reset password</a>";
         $to=$row['email'];
         $subject  = 'Reset Password';
-        $from = EMAIL;
+        $from = "support@cfaffiliate360.com";
         $header = "From:" . $from;
         $message = 'Click On This Link to Reset Password'.$link;
         $time = time();

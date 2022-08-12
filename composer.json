@@ -1,0 +1,17 @@
+{
+    "name": "nader/forms-app",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Nader\\FormsApp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "naderm1991",
+            "email": "nadermohammad9@gmail.com"
+        }
+    ],
+    "require": {}
+}
