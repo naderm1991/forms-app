@@ -39,6 +39,7 @@ if(isset($_POST['submit_email']) && $_POST['email'])
             $mail->Host       = 'smtp.zoho.com';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
             $mail->Username   = getenv('MAIL_USERNAME');                     //SMTP username
+            var_dump(getenv('MAIL_USERNAME'));die;
             $mail->Password   = getenv('MAIL_PASSWORD');                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
             $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
