@@ -45,7 +45,7 @@ if(isset($_POST['submit_email']) && $_POST['email'])
 
             //Recipients
             $mail->setFrom('nader1_7@zohomail.com', 'Mailer');
-            $mail->addAddress('nadermohammad9@gmail.com', 'Nader Mohamed');     //Add a recipient
+            $mail->addAddress($_POST['email'], 'Nader Mohamed');     //Add a recipient
 //            $mail->addAddress('ellen@example.com');               //Name is optional
 //            $mail->addReplyTo('info@example.com', 'Information');
 //            $mail->addCC('cc@example.com');
@@ -63,6 +63,6 @@ if(isset($_POST['submit_email']) && $_POST['email'])
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
-        //header("refresh:1;url=login.php");
+        header("refresh:1;url=login.php");
     }
 }
