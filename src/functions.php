@@ -1,7 +1,7 @@
 <?php
 function select_query($conn,$columns,$table){
     $email = $columns['email'];
-    $sql = "select email,password from $table where email='$email'";
+    $sql = "select email,password,name from $table where email='$email'";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     return $stmt;

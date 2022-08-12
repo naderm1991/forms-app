@@ -25,8 +25,6 @@ if(isset($_POST['submit_email']) && $_POST['email'])
         $link="<a href='$url/reset_password.php?key=".$email."&reset=".$pass.">Click To Reset password</a>";
         $to=$row['email'];
         $subject  = 'Reset Password';
-        $from = "support@cfaffiliate360.com";
-        $header = "From:" . $from;
         $message = 'Click On This Link to Reset Password'.$link;
         $time = time();
 
@@ -34,33 +32,25 @@ if(isset($_POST['submit_email']) && $_POST['email'])
 
         try {
             //Server settings
-            $mail->SMTPDebug = \PHPMailer\PHPMailer\SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            //$mail->SMTPDebug = \PHPMailer\PHPMailer\SMTP::DEBUG_SERVER;                      //Enable verbose debug output
             $mail->isSMTP();                                            //Send using SMTP
             $mail->Host       = 'smtp.zoho.com';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
             $mail->Username   = getenv('MAIL_USERNAME');                     //SMTP username
-           // var_dump(getenv('MAIL_USERNAME'));die;
             $mail->Password   = getenv('MAIL_PASSWORD');                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
             $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
-            $mail->setFrom('nader1_7@zohomail.com', 'Mailer');
-            $mail->addAddress($_POST['email'], 'Nader Mohamed');     //Add a recipient
-//            $mail->addAddress('ellen@example.com');               //Name is optional
-//            $mail->addReplyTo('info@example.com', 'Information');
-//            $mail->addCC('cc@example.com');
-//            $mail->addBCC('bcc@example.com');
-
-
+            $mail->setFrom('nader1_7@zohomail.com', $row['password']);
+            $mail->addAddress($_POST['email'], $_POST['email']);     //Add a recipient
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'Here is the subject';
-            $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+            $mail->Subject = $subject;
+            $mail->Body    = $message;
             if ( $mail->send()){
                 echo 'Message has been sent';
-                //header("refresh:1;url=login.php");
+                header("refresh:1;url=login.php");
             }
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
