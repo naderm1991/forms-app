@@ -1,8 +1,14 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+
 ini_set( 'display_errors', 1 );
 error_reporting( E_ALL );
 require 'db_connection.php';
 require 'src/functions.php';
+
+//Load Composer's autoloader
+require 'vendor/autoload.php';
 
 if(isset($_POST['submit_email']) && $_POST['email'])
 {
@@ -11,13 +17,6 @@ if(isset($_POST['submit_email']) && $_POST['email'])
     $stmt = select_query($conn,$_POST,'users');
     if($stmt->rowCount()==1)
     {
-        ini_set("MAIL_DRIVER", "smtp");
-        ini_set("MAIL_ENCRYPTION", "tls");
-        ini_set("MAIL_FROM_ADDRESS", "support@cfaffiliate360.com");
-        ini_set("MAIL_HOST", "smtp.mailtrap.io");
-        ini_set("MAIL_PASSWORD", "5789374bb1e258");
-        ini_set("MAIL_PORT", "2525");
-        ini_set("MAIL_USERNAME", "d4aba6e00b3c5b");
 
         $row = $stmt->fetch();
         $email=md5($row['email']);
@@ -30,17 +29,40 @@ if(isset($_POST['submit_email']) && $_POST['email'])
         $header = "From:" . $from;
         $message = 'Click On This Link to Reset Password'.$link;
         $time = time();
-        if(mail($to,$subject,$message,$header))
-        {
-            $array['password'] = $pass;
-            $array['email'] = $row['email'];
-            insert_query($conn,$array);
-            echo "Check Your Email and Click on the link sent to your email";
+
+        $mail = new PHPMailer(true);
+
+        try {
+            //Server settings
+            $mail->SMTPDebug = \PHPMailer\PHPMailer\SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            $mail->isSMTP();                                            //Send using SMTP
+            $mail->Host       = 'smtp.zoho.com';                     //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = 'nadermohammad9@gmail.com';                     //SMTP username
+            $mail->Password   = '309012JUVen_11';                               //SMTP password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+            //Recipients
+            $mail->setFrom('nader1_7@zohomail.com', 'Mailer');
+            $mail->addAddress('nadermohammad9@gmail.com', 'Nader Mohamed');     //Add a recipient
+//            $mail->addAddress('ellen@example.com');               //Name is optional
+//            $mail->addReplyTo('info@example.com', 'Information');
+//            $mail->addCC('cc@example.com');
+//            $mail->addBCC('bcc@example.com');
+
+
+            //Content
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = 'Here is the subject';
+            $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+            $mail->send();
+            echo 'Message has been sent';
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
-        else
-        {
-            echo "Mail Error";
-        }
-        header("refresh:1;url=login.php");
+        //header("refresh:1;url=login.php");
     }
 }
