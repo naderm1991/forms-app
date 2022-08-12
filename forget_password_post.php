@@ -63,6 +63,6 @@ if(isset($_POST['submit_email']) && $_POST['email'])
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
-        header("refresh:1;url=login.php");
+//        header("refresh:1;url=login.php");
     }
 }
