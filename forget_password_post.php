@@ -38,8 +38,8 @@ if(isset($_POST['submit_email']) && $_POST['email'])
             $mail->isSMTP();                                            //Send using SMTP
             $mail->Host       = 'smtp.zoho.com';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'nadermohammad9@gmail.com';                     //SMTP username
-            $mail->Password   = '309012JUVen_11';                               //SMTP password
+            $mail->Username   = getenv('MAIL_USERNAME');                     //SMTP username
+            $mail->Password   = getenv('MAIL_PASSWORD');                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
             $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
@@ -57,12 +57,12 @@ if(isset($_POST['submit_email']) && $_POST['email'])
             $mail->Subject = 'Here is the subject';
             $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
             $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-            $mail->send();
-            echo 'Message has been sent';
+            if ( $mail->send()){
+                echo 'Message has been sent';
+                //header("refresh:1;url=login.php");
+            }
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
-//        header("refresh:1;url=login.php");
     }
 }
