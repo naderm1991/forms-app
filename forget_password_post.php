@@ -22,10 +22,9 @@ if(isset($_POST['submit_email']) && $_POST['email'])
         $email=md5($row['email']);
         $pass=md5($row['password']);
         $url = BASE_URL;
-        $link="<a href='$url/reset_password.php?key=".$email."&reset=".$pass.">Click To Reset password</a>";
         $to=$row['email'];
         $subject  = 'Reset Password';
-        $message = 'Click On This Link to Reset Password'.$link;
+        $message = "Click On This Link to Reset Password <a href=\"$url/reset_password.php?key=$email&reset=$pass\">Click To Reset password</a> ";
         $time = time();
 
         $mail = new PHPMailer(true);
@@ -42,12 +41,14 @@ if(isset($_POST['submit_email']) && $_POST['email'])
             $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
-            $mail->setFrom('nader1_7@zohomail.com', $row['password']);
-            $mail->addAddress($_POST['email'], $_POST['email']);     //Add a recipient
+            $mail->setFrom('nader1_7@zohomail.com', "Forms App");
+            $mail->addAddress($_POST['email'],$row['name']);     //Add a recipient
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
             $mail->Subject = $subject;
             $mail->Body    = $message;
+            $mail->AltBody = $message;
+
             if ( $mail->send()){
                 echo 'Message has been sent';
                 header("refresh:1;url=login.php");
