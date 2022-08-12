@@ -14,4 +14,4 @@ if (!defined('DB_PASSWORD')) {define("DB_PASSWORD", 'b8a5c625');}
 if (!defined('DB_NAME')) {define("DB_NAME", 'heroku_d3cb62d851fe922');}
 
 if (!defined('BASE_URL')) {define("BASE_URL", 'https://forms-app-com.herokuapp.com/');}
-if (!defined('EMAIL')) {define("EMAIL", 'emailtest@YOURDOMAIN');}
+if (!defined('EMAIL')) {define("EMAIL", '18a7532817-53c10a@inbox.mailtrap.io');}

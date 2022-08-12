@@ -11,6 +11,9 @@ if(isset($_POST['submit_email']) && $_POST['email'])
     $stmt = select_query($conn,$_POST,'users');
     if($stmt->rowCount()==1)
     {
+        ini_set("SMTP", "smtp.mailtrap.io");
+        ini_set("sendmail_from", "18a7532817-53c10a@inbox.mailtrap.io");
+
         $row = $stmt->fetch();
         $email=md5($row['email']);
         $pass=md5($row['password']);
