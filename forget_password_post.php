@@ -41,7 +41,7 @@ if(isset($_POST['submit_email']) && $_POST['email'])
             $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
-            $mail->setFrom('nader1_7@zohomail.com', "Forms App");
+            $mail->setFrom('formsapp@zohomail.com', "Forms App");
             $mail->addAddress($_POST['email'],$row['name']);     //Add a recipient
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
